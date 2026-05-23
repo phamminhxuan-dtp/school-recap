@@ -228,16 +228,16 @@ export default function AnalyzePage() {
     );
 
     const hk1Avg = safeScores.length
-      ? safeScores.reduce((sum, item) => sum + item.hk1, 0) / 9
-      : 0;
+  ? safeScores.reduce((sum, item) => sum + item.hk1, 0) / safeScores.length
+  : 0;
 
-    const hk2Avg = safeScores.length
-      ? safeScores.reduce((sum, item) => sum + item.hk2, 0) / 9
-      : 0;
+const hk2Avg = safeScores.length
+  ? safeScores.reduce((sum, item) => sum + item.hk2, 0) / safeScores.length
+  : 0;
 
-    const yearAvg = safeScores.length
-      ? safeScores.reduce((sum, item) => sum + item.avg, 0) / 9
-      : 0;
+const yearAvg = safeScores.length
+  ? safeScores.reduce((sum, item) => sum + item.avg, 0) / safeScores.length
+  : 0;
 
     const bestSubject = safeScores.reduce<ScoreItem | null>((best, item) => {
       if (!best) return item;
@@ -340,8 +340,8 @@ export default function AnalyzePage() {
             <div className="mt-5 grid gap-2 sm:mt-6 sm:grid-cols-2 sm:gap-3">
               <SummaryCard
                 icon="📚"
-                label="Kết quả học tập"
-                value={`CN: ${formatScore(analysis.yearAvg)}`}
+                label="Điểm trung bình cả năm"
+                value={` ${formatScore(analysis.yearAvg)}`}
               />
               <SummaryCard
                 icon="🏆"
@@ -410,7 +410,7 @@ export default function AnalyzePage() {
               key="card-1"
               title="Kết quả học tập"
               emoji="📚"
-              subtitle="Điểm trung bình cả năm được tính bằng tổng các môn chia cho 9."
+              subtitle="Điểm trung bình cả năm được tính bằng tổng các môn chia cho số môn."
               frontHint="Tổng kết cả năm học"
               flipped={flipped[1]}
               onFlip={() => setFlipped((prev) => ({ ...prev, 1: !prev[1] }))}
