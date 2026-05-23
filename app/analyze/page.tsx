@@ -55,7 +55,6 @@ function FlipCard({
         transition={{ type: "spring", stiffness: 120, damping: 16, mass: 0.9 }}
         onClick={onFlip}
       >
-        {/* Front */}
         <div
           className={`absolute inset-0 rounded-[2rem] border border-white/60 bg-gradient-to-br ${accentClassName} p-5 shadow-[0_20px_60px_rgba(0,0,0,0.12)]`}
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
@@ -100,7 +99,6 @@ function FlipCard({
           </div>
         </div>
 
-        {/* Back */}
         <div
           className="absolute inset-0 rounded-[2rem] border border-white/60 bg-white p-5 shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
           style={{
@@ -147,30 +145,27 @@ function SummaryCard({
   icon,
   label,
   value,
-  hint,
 }: {
   icon: string;
   label: string;
   value: string;
-  hint?: string;
 }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/70 p-4 shadow-xl backdrop-blur-md"
+      className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/70 p-3 shadow-xl backdrop-blur-md sm:p-4"
     >
       <div className="pointer-events-none absolute -right-4 -top-4 text-4xl opacity-20">
         {icon}
       </div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-gray-500">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500 sm:text-[11px]">
         {label}
       </p>
-      <p className="mt-3 text-2xl font-black leading-tight text-gray-900">
+      <p className="mt-2 text-lg font-black leading-tight text-gray-900 sm:mt-3 sm:text-xl">
         {value}
       </p>
-      {hint ? <p className="mt-2 text-sm leading-6 text-gray-600">{hint}</p> : null}
     </motion.div>
   );
 }
@@ -305,34 +300,10 @@ export default function AnalyzePage() {
     return (
       <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-fuchsia-100 via-pink-50 to-sky-100 px-4 py-6 sm:py-8">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <motion.div
-            animate={{ y: [0, -10, 0], x: [0, 6, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-2 top-8 text-4xl opacity-70"
-          >
-            ✨
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, 12, 0], x: [0, -8, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute right-4 top-24 text-4xl opacity-60"
-          >
-            🌸
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, -8, 0], x: [0, 8, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-20 left-8 text-4xl opacity-60"
-          >
-            📚
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, 8, 0], x: [0, -6, 0] }}
-            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-28 right-6 text-4xl opacity-60"
-          >
-            🌟
-          </motion.div>
+          <motion.div animate={{ y: [0, -10, 0], x: [0, 6, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute left-2 top-8 text-4xl opacity-70">✨</motion.div>
+          <motion.div animate={{ y: [0, 12, 0], x: [0, -8, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute right-4 top-24 text-4xl opacity-60">🌸</motion.div>
+          <motion.div animate={{ y: [0, -8, 0], x: [0, 8, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-20 left-8 text-4xl opacity-60">📚</motion.div>
+          <motion.div animate={{ y: [0, 8, 0], x: [0, -6, 0] }} transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-28 right-6 text-4xl opacity-60">🌟</motion.div>
           <div className="absolute -left-24 top-20 h-64 w-64 rounded-full bg-pink-300/25 blur-3xl" />
           <div className="absolute -right-24 top-52 h-72 w-72 rounded-full bg-sky-300/25 blur-3xl" />
           <div className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-amber-200/25 blur-3xl" />
@@ -366,30 +337,26 @@ export default function AnalyzePage() {
               </div>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:mt-7 md:grid-cols-2">
+            <div className="mt-5 grid gap-2 sm:mt-6 sm:grid-cols-2 sm:gap-3">
               <SummaryCard
                 icon="📚"
                 label="Kết quả học tập"
-                value={`HK1: ${formatScore(analysis.hk1Avg)} • HK2: ${formatScore(analysis.hk2Avg)} • CN: ${formatScore(analysis.yearAvg)}`}
-                hint="Tổng hợp 3 cột điểm quan trọng của cả năm học."
+                value={`CN: ${formatScore(analysis.yearAvg)}`}
               />
               <SummaryCard
                 icon="🏆"
                 label="Môn sở trường"
                 value={`${analysis.bestSubject?.subject ?? "Chưa có dữ liệu"} • ${formatScore(analysis.bestSubject?.avg ?? 0)}`}
-                hint="Môn có điểm trung bình cả năm cao nhất."
               />
               <SummaryCard
                 icon="📈"
                 label="Tiến bộ nhiều nhất"
                 value={analysis.mostImproved ? `${analysis.mostImproved.subject} (+${analysis.mostImproved.diff.toFixed(2)})` : "Không có"}
-                hint={analysis.mostImproved ? "Tăng trưởng rõ nhất giữa học kì 1 và học kì 2." : "Không có môn nào tăng hơn học kì 1."}
               />
               <SummaryCard
                 icon="🎓"
                 label="Danh hiệu đạt được"
                 value={analysis.title}
-                hint={analysis.subtitle}
               />
             </div>
 
@@ -408,8 +375,8 @@ export default function AnalyzePage() {
                 </div>
               </div>
               <p className="mt-5 text-center text-[10px] font-medium tracking-[0.2em] text-white/40">
-  CODE BY CHATGPT AND PHAM MINH XUAN
-</p>
+                CODED BY CHATGPT AND PHAM MINH XUAN
+              </p>
             </div>
           </div>
         </motion.div>
